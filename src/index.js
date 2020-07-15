@@ -1,62 +1,62 @@
-import React, { useReducer } from 'react';
-import ReactDOM from 'react-dom';
-
-import { WizardProvider } from './context/WizardContext';
-import { DataProvider } from './context/DataContext';
-import { initialState } from './config/initialState';
-import { reducer } from './reducers/';
-
-import { useWizard } from './hooks/useWizard';
-
-import { Step } from './components/Step/Step';
-import { Preview } from './components/Preview/Preview';
-import { PrintPlacement } from './components/Wizard/PrintPlacement/PrintPlacement';
-import { Graphic } from './components/Wizard/Graphic/Graphic';
-import { PrintStyle } from './components/Wizard/PrintStyle/PrintStyle';
-
+import axios from 'axios';
+import { createAutoComplete } from './AutoComplete/AutoComplete';
+import { compareValues } from './utils';
 import './styles/index.scss';
-import styles from './index.scss';
 
-const PrintWizard = () => {
-  const { step, goToNextStep, goToPrevStep } = useWizard();
-  const [state, dispatch] = useReducer(reducer, initialState);
+createAutoComplete({
+  renderLabel() {
+    return `
+        Search for <a href="//github.com" target="_blank">GitHub</a> users and repos
+    `;
+  },
+  renderOption(item) {
+    const isUser = item.login;
+    const isRepo = item.name;
 
-  return (
-    <DataProvider value={{ state, dispatch }}>
-      <WizardProvider value={{ goToNextStep, goToPrevStep, step }}>
-        <div className={`container ${styles['view']}`}>
-          <main>
-            <h2>Choose your T-shirt style</h2>
-            {(() => {
-              switch (step) {
-                case 1:
-                  return (
-                    <Step>
-                      <PrintPlacement />
-                    </Step>
-                  );
-                case 2:
-                  return (
-                    <Step>
-                      <Graphic />
-                    </Step>
-                  );
-                case 3:
-                  return (
-                    <Step>
-                      <PrintStyle />
-                    </Step>
-                  );
-                default:
-                  return null;
-              }
-            })()}
-          </main>
-          <Preview />
-        </div>
-      </WizardProvider>
-    </DataProvider>
-  );
-};
+    if (isUser) {
+      return `
+        <a tabindex="1" class="focusable" href="${item.html_url}" target="_blank">
+          <img src="${item.avatar_url}" />
+          ${item.login}
+        </a>
+    `;
+    } else if (isRepo) {
+      return `
+      <a tabindex="1" class="focusable" href="${item.html_url}" target="_blank">
+        <img src="${item.owner.avatar_url}" />
+        ${item.name}
+      </a>
+      `;
+    }
+  },
+  async fetchData(searchTerm) {
+    const usersResponse = await axios.get(
+      'https://api.github.com/search/users',
+      {
+        params: {
+          q: searchTerm,
+          size: 50,
+          order: 'desc',
+        },
+      },
+    );
 
-ReactDOM.render(<PrintWizard />, document.getElementById('root'));
+    const reposResponse = await axios.get(
+      'https://api.github.com/search/repositories',
+      {
+        params: {
+          q: searchTerm,
+          size: 50,
+          order: 'desc',
+        },
+      },
+    );
+
+    return [
+      ...usersResponse.data.items.sort(compareValues('login')),
+      ...reposResponse.data.items.sort(compareValues('name')),
+    ];
+  },
+  minLength: 3,
+  root: document.querySelector('#autocomplete'),
+});

@@ -1,0 +1,85 @@
+$emphasis: #27d1d0;
+$text: #222222;
+
+.auto-complete {
+  display: flex;
+  flex-direction: column;
+
+  :global {
+    input {
+      border: 1px solid $text;
+      font-size: 1.6rem;
+      padding: 0.8rem 1.2rem;
+
+      &:focus {
+        border: 1px solid $emphasis;
+        outline: 0;
+      }
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .dropdown {
+      display: none;
+      position: relative;
+    }
+
+    .dropdown.is-active {
+      display: block;
+    }
+
+    .dropdown-menu {
+      background: #ffffff;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+      left: 0;
+      max-height: 60rem;
+      overflow-y: scroll;
+      padding: 1rem;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    .dropdown-item {
+      display: flex;
+
+      a {
+        align-items: center;
+        border-bottom: 1px dashed #eaeaea;
+        color: $emphasis;
+        cursor: pointer;
+        display: flex;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        width: 100%;
+      }
+
+      img {
+        max-width: 6rem;
+        margin-right: 1rem;
+      }
+    }
+
+    .messages {
+      font-size: 1.4rem;
+      margin-top: 0.4rem;
+      text-align: center;
+    }
+
+    .fade-in {
+      animation: fadeIn 400ms;
+    }
+  }
+}
+
+@keyframes :global(fadeIn) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
