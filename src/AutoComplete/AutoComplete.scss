@@ -57,7 +57,8 @@ $text: #222222;
         width: 100%;
       }
 
-      a:focus {
+      a:focus,
+      a:hover {
         background: rgba($emphasis, 0.1);
         outline: none;
       }

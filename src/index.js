@@ -6,7 +6,7 @@ import './styles/index.scss';
 createAutoComplete({
   renderLabel() {
     return `
-        Search for <a href="//github.com" target="_blank">GitHub</a> users and repos
+        Search <a href="//github.com" target="_blank">GitHub</a> for users and repos
     `;
   },
   renderOption(item) {
