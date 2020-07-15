@@ -37,6 +37,7 @@ export const createAutoComplete = ({
 
     closeDropdown();
     clearList();
+    clearMessages();
 
     if (value.length < minLength) {
       return;
@@ -56,7 +57,7 @@ export const createAutoComplete = ({
       return;
     }
 
-    messages.textContent = '';
+    clearMessages();
 
     for (let item of items) {
       const option = document.createElement('li');
@@ -89,6 +90,10 @@ export const createAutoComplete = ({
 
   const closeDropdown = () => {
     dropdown.classList.remove('is-active');
+  };
+
+  const clearMessages = () => {
+    messages.textContent = '';
   };
 
   input.addEventListener('input', debounce(onInput, 500));
