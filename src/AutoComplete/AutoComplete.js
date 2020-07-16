@@ -72,8 +72,7 @@ export const createAutoComplete = ({
   const renderDropdownList = () => {
     for (let item of items) {
       const option = document.createElement('li');
-      option.classList.add('dropdown-item', 'focusable');
-      option.setAttribute('tabindex', '1');
+      option.classList.add('dropdown-item');
       option.innerHTML = renderOption(item);
 
       if (onOptionSelect) {
