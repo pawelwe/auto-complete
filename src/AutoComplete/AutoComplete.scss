@@ -1,13 +1,17 @@
 $emphasis: #27d1d0;
+$borderLight: #eaeaea;
+$borderDark: #222222;
 $text: #222222;
 
 .auto-complete {
+  color: $text;
   display: flex;
   flex-direction: column;
 
   :global {
     input {
-      border: 1px solid $text;
+      border: 1px solid $borderDark;
+      color: inherit;
       font-size: 1.6rem;
       padding: 0.8rem 1.2rem;
 
@@ -48,7 +52,7 @@ $text: #222222;
 
       a {
         align-items: center;
-        border-bottom: 1px dashed #eaeaea;
+        border-bottom: 1px dashed $borderLight;
         color: $emphasis;
         cursor: pointer;
         display: flex;

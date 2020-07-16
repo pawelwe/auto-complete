@@ -15,7 +15,7 @@ export const createAutoComplete = ({
   root.innerHTML = `
     <div class="${styles['auto-complete']} fade-in">
     <label>${renderLabel()}</label>
-    <input class="input focusable" />
+    <input autofocus class="input focusable" />
     <div class="dropdown fade-in">
       <div class="dropdown-menu">
         <ul class="dropdown-content results"></ul>
@@ -102,7 +102,7 @@ export const createAutoComplete = ({
   };
 
   const clearMessages = () => {
-    messages.textContent = '';
+    messages.innerHTML = '';
   };
 
   input.addEventListener('input', debounce(onInput, 500));

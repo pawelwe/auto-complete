@@ -10,19 +10,19 @@ createAutoComplete({
     `;
   },
   renderOption(item) {
-    const isUser = item.login;
-    const isRepo = item.name;
+    const isUserItem = item.login;
+    const isRepoItem = item.name;
 
-    if (isUser) {
+    if (isUserItem) {
       return `
-        <a tabindex="1" class="focusable" href="${item.html_url}" target="_blank">
+        <a class="focusable" href="${item.html_url}" target="_blank">
           <img src="${item.avatar_url}" />
           ${item.login}
         </a>
     `;
-    } else if (isRepo) {
+    } else if (isRepoItem) {
       return `
-      <a tabindex="1" class="focusable" href="${item.html_url}" target="_blank">
+      <a class="focusable" href="${item.html_url}" target="_blank">
         <img src="${item.owner.avatar_url}" />
         ${item.name}
       </a>
@@ -30,17 +30,14 @@ createAutoComplete({
     }
   },
   async fetchData(searchTerm) {
-    const usersResponse = await axios.get(
-      'https://api.github.com/search/users',
-      {
-        params: {
-          q: searchTerm,
-          size: 50,
-        },
+    const usersResponse = axios.get('https://api.github.com/search/users', {
+      params: {
+        q: searchTerm,
+        size: 50,
       },
-    );
+    });
 
-    const reposResponse = await axios.get(
+    const reposResponse = axios.get(
       'https://api.github.com/search/repositories',
       {
         params: {
@@ -50,9 +47,18 @@ createAutoComplete({
       },
     );
 
+    const [
+      {
+        data: { items: userItems },
+      },
+      {
+        data: { items: reposItems },
+      },
+    ] = await Promise.all([usersResponse, reposResponse]);
+
     return [
-      ...usersResponse.data.items.sort(compareValues('login')),
-      ...reposResponse.data.items.sort(compareValues('name')),
+      ...userItems.sort(compareValues('login')),
+      ...reposItems.sort(compareValues('name')),
     ];
   },
   minLength: 3,
