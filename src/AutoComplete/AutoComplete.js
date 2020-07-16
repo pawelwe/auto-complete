@@ -8,7 +8,9 @@ export const createAutoComplete = ({
   onOptionSelect,
   fetchData,
   minLength,
-  renderLabel = 'Search',
+  renderLabel = () => {
+    return 'Search';
+  },
 }) => {
   root.innerHTML = `
     <div class="${styles['auto-complete']} fade-in">
