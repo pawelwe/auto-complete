@@ -65,7 +65,11 @@ export const createAutoComplete = ({
     }
 
     clearMessages();
+    renderDropdownList();
+    openDropdown();
+  };
 
+  const renderDropdownList = () => {
     for (let item of items) {
       const option = document.createElement('li');
       option.classList.add('dropdown-item');
@@ -79,8 +83,6 @@ export const createAutoComplete = ({
 
       resultsWrapper.appendChild(option);
     }
-
-    openDropdown();
   };
 
   const clearList = () => {
