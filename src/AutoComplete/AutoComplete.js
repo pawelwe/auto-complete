@@ -34,25 +34,30 @@ export const createAutoComplete = ({
     const {
       target: { value },
     } = event;
+    const isEntryMinLengthNotReached = value.length < minLength;
 
     closeDropdown();
     clearList();
     clearMessages();
 
-    if (value.length < minLength) {
+    if (isEntryMinLengthNotReached) {
       return;
     }
 
     messages.innerHTML = `<img src="${loader}" />`;
 
-    items = await fetchData(value).catch(err => {
-      messages.textContent = err;
-      error = err;
-    });
+    try {
+      items = await fetchData(value);
+    } catch (e) {
+      messages.textContent = e;
+      error = e;
+    }
 
     if (error) return;
 
-    if (items.length === 0) {
+    const noResults = items.length === 0;
+
+    if (noResults) {
       messages.textContent = 'No results...';
       return;
     }
@@ -81,9 +86,9 @@ export const createAutoComplete = ({
   };
 
   const openDropdown = () => {
-    const showContent = input.value.length > 0 && items.length > 0;
+    const showDropdown = input.value.length > 0 && items.length > 0;
 
-    if (showContent) {
+    if (showDropdown) {
       dropdown.classList.add('is-active');
     }
   };

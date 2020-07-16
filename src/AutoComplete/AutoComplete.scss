@@ -25,10 +25,10 @@ $text: #222222;
     .dropdown {
       display: none;
       position: relative;
-    }
 
-    .dropdown.is-active {
-      display: block;
+      &.is-active {
+        display: block;
+      }
     }
 
     .dropdown-menu {

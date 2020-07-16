@@ -36,7 +36,6 @@ createAutoComplete({
         params: {
           q: searchTerm,
           size: 50,
-          order: 'desc',
         },
       },
     );
@@ -47,7 +46,6 @@ createAutoComplete({
         params: {
           q: searchTerm,
           size: 50,
-          order: 'desc',
         },
       },
     );
