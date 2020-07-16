@@ -50,6 +50,12 @@ $text: #222222;
     .dropdown-item {
       display: flex;
 
+      &:focus,
+      &:hover {
+        background: rgba($emphasis, 0.1);
+        outline: none;
+      }
+
       a {
         align-items: center;
         border-bottom: 1px dashed $borderLight;
@@ -59,12 +65,6 @@ $text: #222222;
         padding: 1rem;
         width: 100%;
         word-break: break-all;
-      }
-
-      a:focus,
-      a:hover {
-        background: rgba($emphasis, 0.1);
-        outline: none;
       }
 
       img {
@@ -80,7 +80,7 @@ $text: #222222;
     }
 
     .fade-in {
-      animation: fadeIn 400ms;
+      animation: fadeIn 400ms ease-in-out;
     }
   }
 }
