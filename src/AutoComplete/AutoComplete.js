@@ -31,6 +31,7 @@ export const createAutoComplete = ({
   const messages = root.querySelector('.messages');
   let error = null;
   let items = [];
+  let isDropdownOpenable = false;
 
   const onInput = async event => {
     const {
@@ -46,7 +47,7 @@ export const createAutoComplete = ({
       return;
     }
 
-    messages.innerHTML = `<img src="${loader}" />`;
+    renderLoader();
 
     try {
       items = await fetchData(value);
@@ -64,9 +65,11 @@ export const createAutoComplete = ({
       return;
     }
 
+    isDropdownOpenable = value.length > 0;
+
     clearMessages();
     renderDropdownList();
-    openDropdown();
+    openDropdown(isDropdownOpenable);
   };
 
   const renderDropdownList = () => {
@@ -85,14 +88,8 @@ export const createAutoComplete = ({
     }
   };
 
-  const clearList = () => {
-    resultsWrapper.innerHTML = '';
-  };
-
-  const openDropdown = () => {
-    const showDropdown = input.value.length > 0 && items.length > 0;
-
-    if (showDropdown) {
+  const openDropdown = shouldOpen => {
+    if (shouldOpen) {
       dropdown.classList.add('is-active');
     }
   };
@@ -101,13 +98,21 @@ export const createAutoComplete = ({
     dropdown.classList.remove('is-active');
   };
 
+  const renderLoader = () => {
+    messages.innerHTML = `<img src="${loader}" />`;
+  };
+
+  const clearList = () => {
+    resultsWrapper.innerHTML = '';
+  };
+
   const clearMessages = () => {
     messages.innerHTML = '';
   };
 
   input.addEventListener('input', debounce(onInput, 500));
 
-  input.addEventListener('focus', openDropdown);
+  input.addEventListener('focus', () => openDropdown(isDropdownOpenable));
 
   document.addEventListener('keydown', handleInputFocusTransfer);
 

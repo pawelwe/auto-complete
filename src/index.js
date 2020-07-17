@@ -10,21 +10,28 @@ createAutoComplete({
     `;
   },
   renderOption(item) {
-    const isUserItem = item.login;
-    const isRepoItem = item.name;
+    const {
+      login,
+      name,
+      html_url,
+      avatar_url,
+      owner: { avatar_url: owner_avatar_url } = {},
+    } = item;
+    const isUserItem = login;
+    const isRepoItem = name;
 
     if (isUserItem) {
       return `
-        <a class="focusable" href="${item.html_url}" target="_blank">
-          <img src="${item.avatar_url}" />
-          ${item.login}
+        <a class="focusable" href="${html_url}" target="_blank">
+          <img src="${avatar_url}" />
+          ${login}
         </a>
     `;
     } else if (isRepoItem) {
       return `
-      <a class="focusable" href="${item.html_url}" target="_blank">
-        <img src="${item.owner.avatar_url}" />
-        ${item.name}
+      <a class="focusable" href="${html_url}" target="_blank">
+        <img src="${owner_avatar_url}" />
+        ${name}
       </a>
       `;
     }
