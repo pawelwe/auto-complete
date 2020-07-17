@@ -10,31 +10,14 @@ createAutoComplete({
     `;
   },
   renderOption(item) {
-    const {
-      login,
-      name,
-      html_url,
-      avatar_url,
-      owner: { avatar_url: owner_avatar_url } = {},
-    } = item;
-    const isUserItem = login;
-    const isRepoItem = name;
+    const { title, htmlUrl, photo } = item;
 
-    if (isUserItem) {
-      return `
-        <a class="focusable" href="${html_url}" target="_blank">
-          <img src="${avatar_url}" />
-          ${login}
+    return `
+        <a class="focusable" href="${htmlUrl}" target="_blank">
+          <img src="${photo}" />
+          ${title}
         </a>
     `;
-    } else if (isRepoItem) {
-      return `
-      <a class="focusable" href="${html_url}" target="_blank">
-        <img src="${owner_avatar_url}" />
-        ${name}
-      </a>
-      `;
-    }
   },
   async fetchData(searchTerm) {
     const usersResponse = axios.get('https://api.github.com/search/users', {
@@ -63,10 +46,36 @@ createAutoComplete({
       },
     ] = await Promise.all([usersResponse, reposResponse]);
 
-    return [
-      ...userItems.sort(compareValues('login')),
-      ...reposItems.sort(compareValues('name')),
-    ];
+    const users = userItems.reduce((acc, { login, html_url, avatar_url }) => {
+      let mappedItem = {};
+
+      mappedItem.title = login;
+      mappedItem.htmlUrl = html_url;
+      mappedItem.photo = avatar_url;
+
+      acc.push(mappedItem);
+
+      return acc;
+    }, []);
+
+    const repos = reposItems.reduce(
+      (acc, { html_url, owner: { avatar_url: owner_avatar_url }, name }) => {
+        let mappedItem = {};
+
+        mappedItem.title = name;
+        mappedItem.htmlUrl = html_url;
+        mappedItem.photo = owner_avatar_url;
+
+        acc.push(mappedItem);
+
+        return acc;
+      },
+      [],
+    );
+
+    const combinedResults = [...users, ...repos];
+
+    return combinedResults.sort(compareValues('title'));
   },
   minLength: 3,
   root: document.querySelector('#autocomplete'),
