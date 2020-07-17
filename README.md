@@ -5,7 +5,7 @@
 * use yarn start to develop
 
 
-# Initializing the Component:
+# Initializing the Component
 * use createAutoComplete(options)
 
 # Options
