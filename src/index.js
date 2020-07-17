@@ -10,11 +10,11 @@ createAutoComplete({
     `;
   },
   renderOption(item) {
-    const { title, htmlUrl, photo } = item;
+    const { title, htmlUrl, image } = item;
 
     return `
         <a class="focusable" href="${htmlUrl}" target="_blank">
-          <img src="${photo}" />
+          <img src="${image}" alt="${title}" />
           ${title}
         </a>
     `;
@@ -51,7 +51,7 @@ createAutoComplete({
 
       mappedItem.title = login;
       mappedItem.htmlUrl = html_url;
-      mappedItem.photo = avatar_url;
+      mappedItem.image = avatar_url;
 
       acc.push(mappedItem);
 
@@ -64,7 +64,7 @@ createAutoComplete({
 
         mappedItem.title = name;
         mappedItem.htmlUrl = html_url;
-        mappedItem.photo = owner_avatar_url;
+        mappedItem.image = owner_avatar_url;
 
         acc.push(mappedItem);
 
