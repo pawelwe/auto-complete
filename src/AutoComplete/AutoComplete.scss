@@ -14,7 +14,7 @@ $text: #222222;
       color: inherit;
       font-size: 1.6rem;
       padding: 0.8rem 1.2rem;
-      transition: border 200ms ease-in-out;
+      transition: border 200ms ease-out;
       will-change: border;
 
       &:focus {
@@ -59,7 +59,7 @@ $text: #222222;
         cursor: pointer;
         display: flex;
         padding: 1rem;
-        transition: background-color 300ms ease-in-out;
+        transition: background-color 300ms ease-out;
         width: 100%;
         will-change: background-color;
         word-break: break-all;
@@ -84,7 +84,7 @@ $text: #222222;
     }
 
     .fade-in {
-      animation: fadeIn 400ms ease-in-out;
+      animation: fadeIn 300ms ease-out;
     }
   }
 }
