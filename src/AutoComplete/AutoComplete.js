@@ -39,6 +39,8 @@ export const createAutoComplete = ({
     clearList(resultsWrapper);
     clearMessages(messages);
 
+    input.removeEventListener('focus', handleDropdownFocus);
+
     if (isEntryMinLengthNotReached) {
       return;
     }
@@ -61,16 +63,21 @@ export const createAutoComplete = ({
       return;
     }
 
+    const isOpenable = value.length > 0 && !noResults;
+
     clearMessages(messages);
     renderDropdownList(items, resultsWrapper, renderOption);
-    openDropdown(dropdown, value.length > 0);
+    openDropdown(dropdown, isOpenable);
+
+    input.addEventListener('focus', handleDropdownFocus);
+  };
+
+  const handleDropdownFocus = () => {
+    const isOpenable = input.value.length > 0 && items.length > 0;
+    openDropdown(dropdown, isOpenable);
   };
 
   input.addEventListener('input', debounce(onInput, 500));
-
-  input.addEventListener('focus', () =>
-    openDropdown(dropdown, input.value.length > 0),
-  );
 
   document.addEventListener('keydown', handleInputFocusTransfer);
 
