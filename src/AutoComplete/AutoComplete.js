@@ -63,18 +63,23 @@ export const createAutoComplete = ({
       return;
     }
 
-    const isOpenable = value.length > 0 && !noResults;
-
     clearMessages(messages);
     renderDropdownList(items, resultsWrapper, renderOption);
-    openDropdown(dropdown, isOpenable);
+
+    const isOpenable = value.length > 0 && !noResults;
+
+    if (isOpenable) {
+      openDropdown(dropdown);
+    }
 
     input.addEventListener('focus', handleInputFocus);
   };
 
   const handleInputFocus = () => {
     const isOpenable = input.value.length > 0 && items.length > 0;
-    openDropdown(dropdown, isOpenable);
+    if (isOpenable) {
+      openDropdown(dropdown);
+    }
   };
 
   input.addEventListener('input', debounce(onInput, 500));
