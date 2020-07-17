@@ -61,7 +61,7 @@ export const createAutoComplete = ({
     const noResults = items.length === 0;
 
     if (noResults) {
-      messages.textContent = 'No results...';
+      renderNoResults();
       return;
     }
 
@@ -100,6 +100,10 @@ export const createAutoComplete = ({
 
   const renderLoader = () => {
     messages.innerHTML = `<img src="${loader}" />`;
+  };
+
+  const renderNoResults = () => {
+    messages.textContent = 'No results...';
   };
 
   const clearList = () => {
