@@ -1,4 +1,4 @@
-# Autocomplete
+# AutoComplete
 
 ## To start the project
 * use yarn to install dependencies
