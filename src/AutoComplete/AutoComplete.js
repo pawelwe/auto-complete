@@ -39,7 +39,7 @@ export const createAutoComplete = ({
     clearList(resultsWrapper);
     clearMessages(messages);
 
-    input.removeEventListener('focus', handleDropdownFocus);
+    input.removeEventListener('focus', handleInputFocus);
 
     if (isEntryMinLengthNotReached) {
       return;
@@ -69,10 +69,10 @@ export const createAutoComplete = ({
     renderDropdownList(items, resultsWrapper, renderOption);
     openDropdown(dropdown, isOpenable);
 
-    input.addEventListener('focus', handleDropdownFocus);
+    input.addEventListener('focus', handleInputFocus);
   };
 
-  const handleDropdownFocus = () => {
+  const handleInputFocus = () => {
     const isOpenable = input.value.length > 0 && items.length > 0;
     openDropdown(dropdown, isOpenable);
   };
