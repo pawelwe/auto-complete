@@ -1,14 +1,14 @@
 # Autocomplete
 
-# To start the project
+## To start the project
 * use yarn to install dependencies
 * use yarn start to develop
 
 
-# Initializing the Component
+## Initializing the Component
 * use createAutoComplete(options)
 
-# Options
+## Options
 * renderOption -> each result item rendering function
 * renderLabel -> label rendering function (optional)
 * minLength -> number of characters to initialize
