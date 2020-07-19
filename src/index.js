@@ -4,11 +4,9 @@ import { compareValues } from './utils';
 import './styles/index.scss';
 
 createAutoComplete({
-  renderLabel() {
-    return `
+  label: `
         Search <a href="//github.com" target="_blank">GitHub</a> for users and repos
-    `;
-  },
+    `,
   renderOption(item) {
     const { title, htmlUrl, image } = item;
 
@@ -46,31 +44,22 @@ createAutoComplete({
       },
     ] = await Promise.all([usersResponse, reposResponse]);
 
-    const users = userItems.reduce((acc, { login, html_url, avatar_url }) => {
-      let mappedItem = {};
+    const users = userItems.map(({ login, html_url, avatar_url }) => {
+      return {
+        title: login,
+        htmlUrl: html_url,
+        image: avatar_url,
+      };
+    });
 
-      mappedItem.title = login;
-      mappedItem.htmlUrl = html_url;
-      mappedItem.image = avatar_url;
-
-      acc.push(mappedItem);
-
-      return acc;
-    }, []);
-
-    const repos = reposItems.reduce(
-      (acc, { html_url, owner: { avatar_url: owner_avatar_url }, name }) => {
-        let mappedItem = {};
-
-        mappedItem.title = name;
-        mappedItem.htmlUrl = html_url;
-        mappedItem.image = owner_avatar_url;
-
-        acc.push(mappedItem);
-
-        return acc;
+    const repos = reposItems.map(
+      ({ html_url, name, owner: { avatar_url: owner_avatar_url } }) => {
+        return {
+          title: name,
+          htmlUrl: html_url,
+          image: owner_avatar_url,
+        };
       },
-      [],
     );
 
     const combinedResults = [...users, ...repos];

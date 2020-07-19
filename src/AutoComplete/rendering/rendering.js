@@ -2,11 +2,11 @@ import styles from '../AutoComplete.scss';
 
 let id = 0;
 
-export const renderAutoCompleteTemplate = renderLabel => {
+export const renderAutoCompleteTemplate = label => {
   id++;
   return `
     <div class="${styles['auto-complete']} fade-in">
-    <label for="auto-complete-${id}">${renderLabel()}</label>
+    <label for="auto-complete-${id}">${label}</label>
     <input id="auto-complete-${id}" autofocus class="input focusable" />
     <div class="dropdown fade-in">
       <div class="dropdown-menu">

@@ -16,11 +16,9 @@ export const createAutoComplete = ({
   onOptionSelect,
   fetchData,
   minLength,
-  renderLabel = () => {
-    return 'Search';
-  },
+  label = 'Search',
 }) => {
-  root.innerHTML = renderAutoCompleteTemplate(renderLabel);
+  root.innerHTML = renderAutoCompleteTemplate(label);
 
   const input = root.querySelector('input');
   const dropdown = root.querySelector('.dropdown');
