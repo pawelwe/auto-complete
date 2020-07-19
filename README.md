@@ -10,7 +10,7 @@
 
 ## Options
 * renderOption -> each result item rendering function
-* renderLabel -> label rendering function (optional)
+* renderLabel -> label string (optional)
 * minLength -> number of characters to initialize
 * root -> HTML element to which render the component
 * fetchData -> data fetching function
