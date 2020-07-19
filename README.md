@@ -9,8 +9,8 @@
 * use createAutoComplete(options)
 
 ## Options
-* renderOption -> each result item rendering function
-* renderLabel -> label string (optional)
+* label -> label string (optional)
+* renderOption -> result item rendering function
 * minLength -> number of characters to initialize
 * root -> HTML element to which render the component
 * fetchData -> data fetching function
