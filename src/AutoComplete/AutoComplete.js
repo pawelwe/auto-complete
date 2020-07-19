@@ -47,6 +47,7 @@ export const createAutoComplete = ({
 
     try {
       items = await fetchData(value);
+      error = null;
     } catch (e) {
       messages.textContent = e;
       error = e;
